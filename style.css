@@ -1,0 +1,418 @@
+/* Global reset & box sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* NASA-inspired brand tokens */
+:root {
+  --nasa-blue: #0b3d91;
+  --nasa-red: #fc3d21;
+  --nasa-ink: #1f2933;
+  --nasa-muted: #52606d;
+  --nasa-sky: #eef4ff;
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+}
+
+/* Base page styles */
+body {
+  font-family: 'Public Sans', 'Segoe UI', Tahoma, sans-serif;
+  color: var(--nasa-ink);
+  background:
+    radial-gradient(circle at 20% 10%, #ffffff 0%, #f6f9ff 30%, #edf3ff 100%);
+  padding: 20px;
+}
+
+/* Centered container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--surface-soft);
+  border: 1px solid #d9e2ef;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(11, 61, 145, 0.1);
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-family: 'Barlow Condensed', 'Public Sans', sans-serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  color: var(--nasa-blue);
+}
+
+/* Logo */
+.logo {
+  width: 140px;
+  margin-right: 15px;
+}
+
+/* Date‐picker & button row */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+/* Inputs and buttons */
+input[type="date"],
+button {
+  font-family: 'Public Sans', 'Segoe UI', Tahoma, sans-serif;
+  font-weight: normal;
+  color: var(--nasa-ink);
+  padding: 10px 15px;
+  border: 1px solid #bcccdc;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 1.4;
+  width: 100%;
+}
+
+input[type="date"]:focus,
+button:focus {
+  outline: 3px solid rgba(11, 61, 145, 0.25);
+  outline-offset: 1px;
+}
+
+/* Button specific */
+button {
+  background-color: var(--nasa-red);
+  border-color: #d3341c;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #e6351b;
+}
+
+/* Stack horizontally on wider screens */
+@media (min-width: 600px) {
+  .filters {
+    flex-direction: row;
+    padding: 0;
+  }
+  
+  input[type="date"],
+  button {
+    width: auto;
+  }
+}
+
+/* Random space fact displayed above the gallery */
+.space-fact {
+  margin: 0 20px 20px;
+  padding: 16px 20px;
+  background: var(--nasa-sky);
+  border-left: 5px solid var(--nasa-red);
+  color: var(--nasa-ink);
+}
+
+.space-fact h2 {
+  font-family: 'Barlow Condensed', 'Public Sans', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
+  color: var(--nasa-blue);
+  margin-bottom: 6px;
+}
+
+.space-fact p {
+  line-height: 1.5;
+}
+
+@media (min-width: 600px) {
+  .space-fact {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+/* Gallery flex container */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+/* Gallery items */
+.gallery-item {
+  flex: 1 1 100%;  /* full width by default */
+  min-width: 280px;
+  max-width: 500px;
+  background: var(--surface);
+  padding: 10px;
+  border: 1px solid #d9e2ef;
+  border-top: 4px solid var(--nasa-blue);
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-item:focus {
+  outline: 3px solid rgba(11, 61, 145, 0.35);
+  outline-offset: 2px;
+}
+
+/* Apply motion only on devices that have a mouse or trackpad. */
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(11, 61, 145, 0.2);
+  }
+}
+
+/* Three columns on wider screens */
+@media (min-width: 1000px) {
+  .gallery-item {
+    flex: 0 1 31%;
+  }
+}
+
+.image-frame {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.image-frame img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Scale only the image on mouse and trackpad devices. */
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:not(.video-item):hover .image-frame img {
+    transform: scale(1.06);
+  }
+}
+
+.gallery-item p {
+  margin-top: 10px;
+  padding: 5px;
+  font-size: 14px;
+  color: var(--nasa-muted);
+}
+
+/* APOD videos play directly in a responsive embedded player */
+.video-item {
+  cursor: default;
+}
+
+.video-item:hover {
+  transform: none;
+}
+
+.video-player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 4px;
+  background: var(--nasa-blue);
+}
+
+.video-link {
+  display: inline-block;
+  align-self: flex-start;
+  margin: 10px 5px 5px;
+  padding: 8px 12px;
+  background: var(--nasa-red);
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.video-link:hover,
+.video-link:focus {
+  background: #e6351b;
+}
+
+/* Placeholder content */
+.placeholder {
+  flex: 1 1 100%;
+  text-align: center;
+  padding: 40px;
+  color: var(--nasa-muted);
+}
+
+.placeholder-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+/* Prevent background scrolling while modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Modal container and backdrop */
+.image-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.image-modal.hidden {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* Modal content card */
+.modal-content {
+  position: relative;
+  width: min(900px, 92vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-top: 5px solid var(--nasa-blue);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 12px 35px rgba(11, 61, 145, 0.28);
+  z-index: 1;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: var(--nasa-red);
+  color: #fff;
+  border-radius: 4px;
+  width: 34px;
+  height: 34px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background: #e6351b;
+}
+
+.modal-content img {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.modal-content h2 {
+  font-family: 'Barlow Condensed', 'Public Sans', sans-serif;
+  letter-spacing: 0.02em;
+  color: var(--nasa-blue);
+  margin-bottom: 6px;
+  margin-right: 36px;
+}
+
+.modal-date {
+  font-weight: bold;
+  color: var(--nasa-red);
+  margin-bottom: 12px;
+}
+
+.modal-explanation {
+  line-height: 1.6;
+  color: var(--nasa-ink);
+}
+
+/* Phone layout adjustments */
+@media (max-width: 599px) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    border-radius: 8px;
+  }
+
+  .site-header {
+    flex-direction: column;
+    padding: 18px 14px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .logo {
+    width: 120px;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .filters {
+    padding: 0 14px;
+    margin-bottom: 16px;
+  }
+
+  .space-fact {
+    margin: 0 14px 16px;
+    padding: 14px;
+  }
+
+  .gallery {
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .gallery-item {
+    flex-basis: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .image-frame img {
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+
+  .modal-content {
+    width: 94vw;
+    max-height: 92vh;
+    padding: 14px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.6rem;
+  }
+
+  .modal-content img {
+    max-height: 42vh;
+  }
+}
