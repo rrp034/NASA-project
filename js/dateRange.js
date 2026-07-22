@@ -20,4 +20,14 @@ function setupDateInputs(startInput, endInput) {
   startInput.value = startDate.toISOString().split('T')[0];
   endInput.value = today;
 
+  // Choose an end date 20 days after the user's selected start date.
+  startInput.addEventListener('change', () => {
+    const selectedStartDate = new Date(startInput.value);
+    const selectedEndDate = new Date(selectedStartDate);
+    selectedEndDate.setDate(selectedStartDate.getDate() + 20);
+
+    endInput.value = selectedEndDate > new Date(today)
+      ? today
+      : selectedEndDate.toISOString().split('T')[0];
+  });
 }
