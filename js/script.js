@@ -4,6 +4,7 @@ const endInput = document.getElementById('endDate');
 const gallery = document.getElementById('gallery');
 const getImagesButton = document.querySelector('button');
 const spaceFactText = document.getElementById('spaceFactText');
+const themeToggle = document.getElementById('themeToggle');
 const modal = document.createElement('div');
 
 // Your NASA API key
@@ -41,6 +42,21 @@ const modalTitle = document.getElementById('modalTitle');
 const modalDate = document.getElementById('modalDate');
 const modalExplanation = document.getElementById('modalExplanation');
 const modalCloseButton = modal.querySelector('.modal-close');
+
+// Use a saved choice when available, otherwise follow the device preference.
+const savedTheme = localStorage.getItem('theme');
+const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const useDarkMode = savedTheme ? savedTheme === 'dark' : prefersDarkMode;
+
+document.body.classList.toggle('dark-mode', useDarkMode);
+themeToggle.checked = useDarkMode;
+
+// Update the page and remember the choice whenever the slider changes.
+themeToggle.addEventListener('change', () => {
+	const isDarkMode = themeToggle.checked;
+	document.body.classList.toggle('dark-mode', isDarkMode);
+	localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+});
 
 // Call the setupDateInputs function from dateRange.js
 // This sets up the date pickers to:

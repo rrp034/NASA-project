@@ -14,14 +14,30 @@
   --nasa-sky: #eef4ff;
   --surface: #ffffff;
   --surface-soft: #f8fafc;
+  --page-background: radial-gradient(circle at 20% 10%, #ffffff 0%, #f6f9ff 30%, #edf3ff 100%);
+  --border-color: #d9e2ef;
+  --input-border: #bcccdc;
+  --shadow-color: rgba(11, 61, 145, 0.1);
+}
+
+/* Dark-mode colors replace the same tokens used throughout the page. */
+body.dark-mode {
+  --nasa-ink: #f1f5f9;
+  --nasa-muted: #c0cad7;
+  --nasa-sky: #172a45;
+  --surface: #162237;
+  --surface-soft: #0f1a2b;
+  --page-background: radial-gradient(circle at 20% 10%, #223b62 0%, #101b2d 45%, #08111f 100%);
+  --border-color: #314560;
+  --input-border: #536982;
+  --shadow-color: rgba(0, 0, 0, 0.35);
 }
 
 /* Base page styles */
 body {
   font-family: 'Public Sans', 'Segoe UI', Tahoma, sans-serif;
   color: var(--nasa-ink);
-  background:
-    radial-gradient(circle at 20% 10%, #ffffff 0%, #f6f9ff 30%, #edf3ff 100%);
+  background: var(--page-background);
   padding: 20px;
 }
 
@@ -30,13 +46,14 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   background: var(--surface-soft);
-  border: 1px solid #d9e2ef;
+  border: 1px solid var(--border-color);
   border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(11, 61, 145, 0.1);
+  box-shadow: 0 10px 30px var(--shadow-color);
 }
 
 /* Header */
 .site-header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,6 +76,59 @@ h1 {
   margin-right: 15px;
 }
 
+/* Accessible checkbox styled as a dark-mode slider. */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--nasa-muted);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.theme-toggle input {
+  position: absolute;
+  opacity: 0;
+}
+
+.theme-slider {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  background: #708090;
+  border-radius: 11px;
+  transition: background-color 0.2s ease;
+}
+
+.theme-slider::before {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 50%;
+  content: '';
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle input:checked + .theme-slider {
+  background: var(--nasa-red);
+}
+
+.theme-toggle input:checked + .theme-slider::before {
+  transform: translateX(20px);
+}
+
+.theme-toggle input:focus-visible + .theme-slider {
+  outline: 3px solid rgba(11, 61, 145, 0.45);
+  outline-offset: 3px;
+}
+
 /* Date‐picker & button row */
 .filters {
   display: flex;
@@ -75,8 +145,9 @@ button {
   font-family: 'Public Sans', 'Segoe UI', Tahoma, sans-serif;
   font-weight: normal;
   color: var(--nasa-ink);
+  background: var(--surface);
   padding: 10px 15px;
-  border: 1px solid #bcccdc;
+  border: 1px solid var(--input-border);
   border-radius: 4px;
   font-size: 16px;
   line-height: 1.4;
@@ -159,7 +230,7 @@ button:hover {
   max-width: 500px;
   background: var(--surface);
   padding: 10px;
-  border: 1px solid #d9e2ef;
+  border: 1px solid var(--border-color);
   border-top: 4px solid var(--nasa-blue);
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(15, 23, 42, 0.08);
@@ -295,7 +366,7 @@ body.modal-open {
   width: min(900px, 92vw);
   max-height: 90vh;
   overflow-y: auto;
-  background: #ffffff;
+  background: var(--surface);
   border-top: 5px solid var(--nasa-blue);
   border-radius: 10px;
   padding: 20px;
@@ -364,6 +435,11 @@ body.modal-open {
     padding: 18px 14px;
     margin-bottom: 12px;
     text-align: center;
+  }
+
+  .theme-toggle {
+    position: static;
+    margin-top: 4px;
   }
 
   .logo {
